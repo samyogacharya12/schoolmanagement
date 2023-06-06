@@ -4,21 +4,16 @@ import com.example.schoolmanagement.config.UserInfoDetails;
 import com.example.schoolmanagement.dto.UserDto;
 import com.example.schoolmanagement.entity.User;
 import com.example.schoolmanagement.enumconstants.UserType;
-import com.example.schoolmanagement.exception.BadRequestException;
 import com.example.schoolmanagement.mapper.UserMapper;
 import com.example.schoolmanagement.repository.UserRepository;
-import com.example.schoolmanagement.util.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.support.SecurityWebApplicationContextUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Objects;
@@ -73,11 +68,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void delete(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        UserDetails userDetails= SecurityUtils.getCurrentUser();
-        if (user.isPresent() && user.get().getRoles().toString().equals(userDetails.getAuthorities().toString())) {
-            userRepository.deleteById(id);
-        } throw new BadRequestException("you cannot delete user that are not your type","User","400");
+        userRepository.deleteById(id);
+//        Optional<User> user = userRepository.findById(id);
+//        UserDetails userDetails= SecurityUtils.getCurrentUser();
+//        if (user.isPresent() && user.get().getRoles().toString().equals(userDetails.getAuthorities().toString())) {
+//            userRepository.deleteById(id);
+//        }
     }
     @Override
     public List<UserDto> findAll() {
