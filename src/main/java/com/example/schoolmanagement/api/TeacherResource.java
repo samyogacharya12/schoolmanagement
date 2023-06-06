@@ -11,19 +11,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/students")
-public class StudentResource {
+@RequestMapping("/teachers")
+public class TeacherResource {
 
     private final UserService userService;
 
 
-    public StudentResource(UserService userService) {
+    public TeacherResource(UserService userService) {
         this.userService = userService;
     }
 
 
     @PutMapping
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @PreAuthorize("hasAuthority('ROLE_TEACHER')")
     public ResponseEntity<UserDto> save(@RequestBody UserDto userDto) {
         userDto.setUpdatedDate(LocalDateTime.now());
         UserDto userDto1 = this.userService.saver(userDto);
@@ -32,18 +32,16 @@ public class StudentResource {
 
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @PreAuthorize("hasAuthority('ROLE_TEACHER')")
     public ResponseEntity<List<UserDto>> fetch(@RequestParam(value = "userType") String userType) {
         List<UserDto> userDtos = this.userService.findByType(userType);
         return new ResponseEntity<>(userDtos, HttpStatus.OK);
     }
 
     @DeleteMapping
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @PreAuthorize("hasAuthority('ROLE_TEACHER')")
     public ResponseEntity<?> delete(@RequestParam(value = "id") Long id) {
         this.userService.delete(id);
         return new ResponseEntity<>("user is deleted", HttpStatus.OK);
     }
-
-
 }

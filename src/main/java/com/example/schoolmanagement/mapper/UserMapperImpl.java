@@ -18,10 +18,14 @@ public class UserMapperImpl implements UserMapper {
     }
 
     private static UserDto mapToUserDto(User user) {
-        return new UserDto(user.getId(),
+
+        UserDto userDto = new UserDto(user.getId(),
                 user.getName()
-                , user.getEmail(),user.getPassword(),
+                , user.getEmail(), user.getPassword(),
                 user.getRoles().toString());
+        userDto.setCreatedDate(user.getCreatedDate());
+        userDto.setUpdatedDate(user.getUpdatedDate());
+        return userDto;
     }
 
 
@@ -34,6 +38,7 @@ public class UserMapperImpl implements UserMapper {
     public User toEntity(UserDto userDto) {
         User user = new User(userDto.getName(), userDto.getEmail(),
                 userDto.getPassword(), Enum.valueOf(UserType.class, userDto.getRoles()));
+        user.setId(userDto.getId());
         user.setCreatedDate(userDto.getCreatedDate());
         user.setUpdatedDate(userDto.getUpdatedDate());
         user.setStatus(userDto.isStatus());

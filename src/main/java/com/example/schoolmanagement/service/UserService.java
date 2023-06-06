@@ -8,7 +8,11 @@ public interface UserService {
 
     UserDto saver(UserDto userDto);
 
+    UserDto findById(Long id);
+
+    void delete(Long id);
+
     List<UserDto> findAll();
 
-    List<UserDto> findByType();
+    List<UserDto> findByType(String userType);
 }
