@@ -23,11 +23,18 @@ public class StudentResource {
 
 
     @PutMapping
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @PreAuthorize("hasAuthority('c')")
     public ResponseEntity<UserDto> save(@RequestBody UserDto userDto) {
         userDto.setUpdatedDate(LocalDateTime.now());
-        UserDto userDto1 = this.userService.saver(userDto);
+        UserDto userDto1 = this.userService.update(userDto);
         return new ResponseEntity<>(userDto1, HttpStatus.OK);
+    }
+
+    @GetMapping("/fetch")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    public ResponseEntity<UserDto> fetchById(@RequestParam(value = "id") Long id) {
+        UserDto userDto = this.userService.findById(id);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
 

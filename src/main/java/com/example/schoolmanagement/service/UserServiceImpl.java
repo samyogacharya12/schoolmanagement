@@ -9,6 +9,10 @@ import com.example.schoolmanagement.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -48,17 +52,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDto saver(UserDto userDto) {
+    public UserDto save(UserDto userDto) {
         log.debug("saving user");
-        if(Objects.isNull(userDto.getId())) {
-            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        }
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = this.userMapper.toEntity(userDto);
         return userMapper.toDto(userRepository.save(user));
     }
 
     @Override
+    @CachePut(cacheNames="user",key = "#userDto.id")
+    public UserDto update(UserDto userDto) {
+        log.debug("updating user");
+        User user = this.userMapper.toEntity(userDto);
+        return userMapper.toDto(userRepository.save(user));
+    }
+
+
+    @Override
+    @Cacheable(cacheNames = "user", key="#id")
     public UserDto findById(Long id) {
+        log.info("fetching user from database");
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             return this.userMapper.toDto(user.get());
@@ -67,6 +80,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @CacheEvict(cacheNames="user",key="#id")
     public void delete(Long id) {
         userRepository.deleteById(id);
 //        Optional<User> user = userRepository.findById(id);

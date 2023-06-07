@@ -26,7 +26,7 @@ public class UserResource {
     public ResponseEntity<UserDto> addNewUser(@RequestBody UserDto userDto) {
         userDto.setCreatedDate(LocalDateTime.now());
         userDto.setUpdatedDate(LocalDateTime.now());
-        UserDto user = this.userService.saver(userDto);
+        UserDto user = this.userService.save(userDto);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

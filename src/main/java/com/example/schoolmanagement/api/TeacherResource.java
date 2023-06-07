@@ -26,7 +26,7 @@ public class TeacherResource {
     @PreAuthorize("hasAuthority('ROLE_TEACHER')")
     public ResponseEntity<UserDto> save(@RequestBody UserDto userDto) {
         userDto.setUpdatedDate(LocalDateTime.now());
-        UserDto userDto1 = this.userService.saver(userDto);
+        UserDto userDto1 = this.userService.update(userDto);
         return new ResponseEntity<>(userDto1, HttpStatus.OK);
     }
 
@@ -37,6 +37,16 @@ public class TeacherResource {
         List<UserDto> userDtos = this.userService.findByType(userType);
         return new ResponseEntity<>(userDtos, HttpStatus.OK);
     }
+
+
+    @GetMapping("/fetch")
+    @PreAuthorize("hasAuthority('ROLE_TEACHER')")
+    public ResponseEntity<UserDto> fetchById(@RequestParam(value = "id") Long id) {
+        UserDto userDto = this.userService.findById(id);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+
 
     @DeleteMapping
     @PreAuthorize("hasAuthority('ROLE_TEACHER')")
