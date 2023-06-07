@@ -23,7 +23,7 @@ public class StudentResource {
 
 
     @PutMapping
-    @PreAuthorize("hasAuthority('c')")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public ResponseEntity<UserDto> save(@RequestBody UserDto userDto) {
         userDto.setUpdatedDate(LocalDateTime.now());
         UserDto userDto1 = this.userService.update(userDto);

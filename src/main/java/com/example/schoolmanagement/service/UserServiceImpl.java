@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @CachePut(cacheNames="user",key = "#userDto.id")
     public UserDto update(UserDto userDto) {
-        log.debug("updating user");
+        log.info("updating user");
         User user = this.userMapper.toEntity(userDto);
         return userMapper.toDto(userRepository.save(user));
     }
@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @CacheEvict(cacheNames="user",key="#id")
     public void delete(Long id) {
+        log.info("delete user");
         userRepository.deleteById(id);
 //        Optional<User> user = userRepository.findById(id);
 //        UserDetails userDetails= SecurityUtils.getCurrentUser();
