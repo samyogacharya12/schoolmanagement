@@ -1,6 +1,8 @@
 package com.example.schoolmanagement.api;
 
+import com.example.schoolmanagement.dto.TeacherDto;
 import com.example.schoolmanagement.dto.UserDto;
+import com.example.schoolmanagement.service.TeacherService;
 import com.example.schoolmanagement.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +18,21 @@ public class TeacherResource {
 
     private final UserService userService;
 
+    private final TeacherService teacherService;
 
-    public TeacherResource(UserService userService) {
+
+    public TeacherResource(UserService userService,TeacherService teacherService) {
         this.userService = userService;
+        this.teacherService=teacherService;
     }
 
 
     @PutMapping
     @PreAuthorize("hasAuthority('ROLE_TEACHER')")
-    public ResponseEntity<UserDto> save(@RequestBody UserDto userDto) {
-        userDto.setUpdatedDate(LocalDateTime.now());
-        UserDto userDto1 = this.userService.update(userDto);
-        return new ResponseEntity<>(userDto1, HttpStatus.OK);
+    public ResponseEntity<TeacherDto> save(@RequestBody TeacherDto teacherDto) {
+        teacherDto.setUpdatedDate(LocalDateTime.now());
+        TeacherDto teacherDto1 = this.teacherService.update(teacherDto);
+        return new ResponseEntity<>(teacherDto1, HttpStatus.OK);
     }
 
 
@@ -41,9 +46,9 @@ public class TeacherResource {
 
     @GetMapping("/fetch")
     @PreAuthorize("hasAuthority('ROLE_TEACHER')")
-    public ResponseEntity<UserDto> fetchById(@RequestParam(value = "id") Long id) {
-        UserDto userDto = this.userService.findById(id);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    public ResponseEntity<TeacherDto> fetchById(@RequestParam(value = "id") Long id) {
+        TeacherDto teacherDto = this.teacherService.findById(id);
+        return new ResponseEntity<>(teacherDto, HttpStatus.OK);
     }
 
 
