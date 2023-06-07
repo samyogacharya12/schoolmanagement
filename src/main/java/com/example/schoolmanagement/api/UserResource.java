@@ -1,5 +1,6 @@
 package com.example.schoolmanagement.api;
 
+import com.example.schoolmanagement.dto.RegisterUserDto;
 import com.example.schoolmanagement.dto.UserDto;
 import com.example.schoolmanagement.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,10 @@ public class UserResource {
 
 
     @PostMapping("/save")
-    public ResponseEntity<UserDto> addNewUser(@RequestBody UserDto userDto) {
-        userDto.setCreatedDate(LocalDateTime.now());
-        userDto.setUpdatedDate(LocalDateTime.now());
-        UserDto user = this.userService.save(userDto);
+    public ResponseEntity<RegisterUserDto> addNewUser(@RequestBody RegisterUserDto registerUserDto) {
+        registerUserDto.setCreatedDate(LocalDateTime.now());
+        registerUserDto.setUpdatedDate(LocalDateTime.now());
+        RegisterUserDto user = this.userService.save(registerUserDto);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

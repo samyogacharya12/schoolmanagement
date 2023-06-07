@@ -2,17 +2,12 @@ package com.example.schoolmanagement.entity;
 
 
 import com.example.schoolmanagement.enumconstants.UserType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "user")
 public class User extends BaseEntity {
 
 
@@ -30,11 +25,16 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
+
     public User(String name, String email, String password, UserType roles) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.roles = roles;
+    }
+
+    public User(){
+
     }
 
     @Override

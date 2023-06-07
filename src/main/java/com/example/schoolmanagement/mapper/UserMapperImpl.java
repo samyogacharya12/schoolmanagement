@@ -1,5 +1,6 @@
 package com.example.schoolmanagement.mapper;
 
+import com.example.schoolmanagement.dto.RegisterUserDto;
 import com.example.schoolmanagement.dto.UserDto;
 import com.example.schoolmanagement.entity.User;
 import com.example.schoolmanagement.enumconstants.UserType;
@@ -18,7 +19,6 @@ public class UserMapperImpl implements UserMapper {
     }
 
     private static UserDto mapToUserDto(User user) {
-
         UserDto userDto = new UserDto(user.getId(),
                 user.getName()
                 , user.getEmail(), user.getPassword(),
@@ -43,6 +43,21 @@ public class UserMapperImpl implements UserMapper {
         user.setUpdatedDate(userDto.getUpdatedDate());
         user.setStatus(userDto.isStatus());
         user.setDeleted(userDto.isDeleted());
+        user.setId(user.getId());
+        user.setCreatedDate(userDto.getCreatedDate());
+        user.setUpdatedDate(userDto.getUpdatedDate());
+        return user;
+    }
+
+    @Override
+    public User toEntity(RegisterUserDto registerUserDto) {
+        User user = new User(registerUserDto.getName(), registerUserDto.getEmail(),
+                registerUserDto.getPassword(), Enum.valueOf(UserType.class, registerUserDto.getRoles()));
+        user.setId(registerUserDto.getId());
+        user.setCreatedDate(registerUserDto.getCreatedDate());
+        user.setUpdatedDate(registerUserDto.getUpdatedDate());
+        user.setStatus(registerUserDto.isStatus());
+        user.setDeleted(registerUserDto.isDeleted());
         return user;
     }
 }

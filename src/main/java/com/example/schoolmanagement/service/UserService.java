@@ -1,12 +1,13 @@
 package com.example.schoolmanagement.service;
 
+import com.example.schoolmanagement.dto.RegisterUserDto;
 import com.example.schoolmanagement.dto.UserDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserDto save(UserDto userDto);
+    RegisterUserDto save(RegisterUserDto registerUserDto);
 
     UserDto update(UserDto userDto);
 
