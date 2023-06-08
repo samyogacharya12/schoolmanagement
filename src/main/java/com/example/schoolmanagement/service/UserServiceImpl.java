@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -58,14 +59,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                             StudentService studentService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-        this.teacherService=teacherService;
-        this.studentService=studentService;
+        this.teacherService = teacherService;
+        this.studentService = studentService;
     }
 
     @Override
     @Transactional
     public RegisterUserDto save(RegisterUserDto registerUserDto) {
         log.debug("saving user");
+        Optional<User> optionalUser = this.userRepository.findByName(registerUserDto.getName());
+        if (optionalUser.isPresent()) {
+            throw new RuntimeException("Sorry UserName already exist");
+        }
+        User userOptional = this.userRepository.findByEmail(registerUserDto.getEmail());
+        if (Objects.nonNull(userOptional) && Objects.nonNull(userOptional.getId())) {
+            throw new RuntimeException("Sorry Email already exist");
+        }
         registerUserDto.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         User user = this.userMapper.toEntity(registerUserDto);
         UserDto userDto = this.userMapper.toDto(userRepository.save(user));
