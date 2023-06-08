@@ -37,6 +37,8 @@ public class SchedulerService {
     private PaymentRepository paymentRepository;
 
 
+//    @Scheduled(cron = "@monthly")
+//    @Scheduled(cron = "0 0 12 1 * *")
     @Scheduled(cron = "0 */5 * ? * *")
     public void processPayment() {
         log.debug("processing payment in every 5 minutes");
@@ -72,9 +74,9 @@ public class SchedulerService {
                     remainingDays = presentDayOfYear - teacherWorkingDays;
                 }
                 if (remainingDays > 30) {
-                    amount = amount + 30000.0;
+                    amount = Double.parseDouble(teacher.getSalary()) + 30000.0;
                 } else if (remainingDays > 60) {
-                    amount = amount + 60000.0;
+                    amount = Double.parseDouble(teacher.getSalary()) + 60000.0;
                 }
                 if (amount > 0.0) {
                     this.mapPayment(amount, new Student(),teacher);

@@ -25,6 +25,8 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "roles")
+    private UserType roles;
 
     public User(String name, String email, String password, UserType roles) {
         this.name = name;
@@ -33,7 +35,7 @@ public class User extends BaseEntity {
         this.roles = roles;
     }
 
-    public User(){
+    public User() {
 
     }
 
@@ -53,9 +55,6 @@ public class User extends BaseEntity {
     public int hashCode() {
         return Objects.hash(getId(), getName(), getEmail(), getPassword(), getRoles());
     }
-
-    @Column(name = "roles")
-    private UserType roles;
 
 
     public Long getId() {
