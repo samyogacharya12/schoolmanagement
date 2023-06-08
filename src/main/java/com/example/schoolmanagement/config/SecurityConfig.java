@@ -31,7 +31,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.httpBasic().and().csrf().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/users/welcome","/users/save").permitAll()
+                .antMatchers("/users/welcome","/users/save,","/api/*").permitAll()
                 .and()
                 .authorizeHttpRequests().antMatchers("/users/**","/students/**")
                 .authenticated().and().formLogin().and().build();
