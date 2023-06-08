@@ -15,10 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
-
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Bean
@@ -31,9 +30,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.httpBasic().and().csrf().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/users/welcome","/users/save,","/api/*").permitAll()
+                .antMatchers("/api/*").permitAll()
+                .antMatchers("/users/save").permitAll()
                 .and()
-                .authorizeHttpRequests().antMatchers("/users/**","/students/**")
+                .authorizeHttpRequests().antMatchers("/users/**", "/students/**")
                 .authenticated().and().formLogin().and().build();
     }
 
@@ -43,8 +43,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
