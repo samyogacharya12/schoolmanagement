@@ -56,7 +56,7 @@ public class TeacherResource {
     @DeleteMapping
     @PreAuthorize("hasAuthority('ROLE_TEACHER')")
     public ResponseEntity<?> delete(@RequestParam(value = "id") Long id) {
-        this.userService.delete(id);
-        return new ResponseEntity<>("user is deleted", HttpStatus.OK);
+        this.teacherService.delete(id);
+        return new ResponseEntity<>("teacher is deleted", HttpStatus.OK);
     }
 }

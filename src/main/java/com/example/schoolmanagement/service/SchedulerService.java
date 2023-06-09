@@ -38,8 +38,8 @@ public class SchedulerService {
 
 
 //    @Scheduled(cron = "@monthly")
-//    @Scheduled(cron = "0 0 12 1 * *")
-    @Scheduled(cron = "0 */5 * ? * *")
+    @Scheduled(cron = "0 0 12 1 * *")
+//    @Scheduled(cron = "0 */5 * ? * *")
     public void processPayment() {
         log.debug("processing payment in every 5 minutes");
         LocalDateTime presentDate = LocalDateTime.now();

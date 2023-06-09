@@ -3,6 +3,7 @@ package com.example.schoolmanagement.entity;
 
 import javax.validation.constraints.NotNull;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -38,10 +39,33 @@ public class Student extends  BaseEntity {
     private String phoneNumber;
 
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Payment> studentsPaymentAccount;
+
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Payment> teachersPaymentAccount;
+
+
+    public List<Payment> getStudentsPaymentAccount() {
+        return studentsPaymentAccount;
+    }
+
+    public void setStudentsPaymentAccount(List<Payment> studentsPaymentAccount) {
+        this.studentsPaymentAccount = studentsPaymentAccount;
+    }
+
+    public List<Payment> getTeachersPaymentAccount() {
+        return teachersPaymentAccount;
+    }
+
+    public void setTeachersPaymentAccount(List<Payment> teachersPaymentAccount) {
+        this.teachersPaymentAccount = teachersPaymentAccount;
+    }
 
     public User getUser() {
         return user;

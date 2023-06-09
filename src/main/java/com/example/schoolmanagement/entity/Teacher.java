@@ -37,7 +37,7 @@ public class Teacher extends BaseEntity {
     private String phoneNumber;
 
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User userInfo;
 

@@ -5,6 +5,7 @@ import com.example.schoolmanagement.dto.RegisterUserDto;
 import com.example.schoolmanagement.dto.UserDto;
 import com.example.schoolmanagement.entity.User;
 import com.example.schoolmanagement.enumconstants.UserType;
+import com.example.schoolmanagement.exception.Invalid;
 import com.example.schoolmanagement.mapper.UserMapper;
 import com.example.schoolmanagement.repository.UserRepository;
 import org.slf4j.Logger;
@@ -69,11 +70,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         log.debug("saving user");
         Optional<User> optionalUser = this.userRepository.findByName(registerUserDto.getName());
         if (optionalUser.isPresent()) {
-            throw new RuntimeException("Sorry UserName already exist");
+            throw new Invalid("Sorry UserName already exist", registerUserDto);
         }
         User userOptional = this.userRepository.findByEmail(registerUserDto.getEmail());
         if (Objects.nonNull(userOptional) && Objects.nonNull(userOptional.getId())) {
-            throw new RuntimeException("Sorry Email already exist");
+            throw new Invalid("Sorry Email already exist",registerUserDto);
         }
         registerUserDto.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         User user = this.userMapper.toEntity(registerUserDto);

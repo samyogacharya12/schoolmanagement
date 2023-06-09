@@ -4,6 +4,7 @@ import com.example.schoolmanagement.dto.RegisterUserDto;
 import com.example.schoolmanagement.dto.TeacherDto;
 import com.example.schoolmanagement.entity.Teacher;
 import com.example.schoolmanagement.mapper.TeacherMapper;
+import com.example.schoolmanagement.repository.PaymentRepository;
 import com.example.schoolmanagement.repository.TeacherRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

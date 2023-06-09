@@ -53,7 +53,7 @@ public class StudentResource {
     @DeleteMapping
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public ResponseEntity<?> delete(@RequestParam(value = "id") Long id) {
-        this.userService.delete(id);
+        this.studentService.delete(id);
         return new ResponseEntity<>("user is deleted", HttpStatus.OK);
     }
 

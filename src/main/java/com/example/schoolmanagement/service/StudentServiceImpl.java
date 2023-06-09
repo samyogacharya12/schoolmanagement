@@ -4,6 +4,7 @@ import com.example.schoolmanagement.dto.RegisterUserDto;
 import com.example.schoolmanagement.dto.StudentDto;
 import com.example.schoolmanagement.entity.Student;
 import com.example.schoolmanagement.mapper.StudentMapper;
+import com.example.schoolmanagement.repository.PaymentRepository;
 import com.example.schoolmanagement.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+
 
 
     @Autowired
