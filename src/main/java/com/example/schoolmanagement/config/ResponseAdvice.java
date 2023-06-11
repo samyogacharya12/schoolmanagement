@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.zalando.problem.DefaultProblem;
 
-@RestControllerAdvice(basePackages = "com.example.fusecanteen.controller")
+@RestControllerAdvice(basePackages = "com.example.schoolmanagement.api")
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     private static final Logger log = LoggerFactory.getLogger(ResponseAdvice.class);
